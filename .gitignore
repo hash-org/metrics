@@ -36,6 +36,9 @@ yarn-error.log
 testem.log
 /typings
 
+__pycache__/
+.ruff_cache/
+
 # System files
 .DS_Store
 Thumbs.db
