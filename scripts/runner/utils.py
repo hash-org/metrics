@@ -3,9 +3,10 @@ import shutil
 import platform
 from subprocess import Popen, PIPE
 from pathlib import Path
-from typing import Literal, Union, Optional
+from typing import List, Literal, Union, Optional
 
-from options import TEMP_DIR
+from options import TEMP_DIR, OptimisationLevel, Settings
+from logger import LOG
 
 
 def checkout_git_revision(repo: Path, revision: str):
@@ -17,9 +18,13 @@ def checkout_git_revision(repo: Path, revision: str):
     :param revision: The revision number.
     :return: Nothing.
     """
-    result = Popen(["git", "checkout", revision], cwd=repo).wait()
+    handle = Popen(["git", "checkout", revision], cwd=repo, stdout=PIPE, stderr=PIPE)
 
+    result = handle.wait()
     if result != 0:
+        _, stderr = handle.communicate()
+
+        LOG.error(f"failed to checkout `{revision}`, error:\n{stderr}")
         raise RuntimeError(f"Could not checkout {revision=}")
 
 
@@ -31,7 +36,9 @@ def revision_exists(repo: Path, revision: str) -> bool:
     :param revision: The revision identifier.
     :return: True if exists, False otherwise.
     """
-    result = Popen(["git", "cat-file", "-e", revision], cwd=repo).wait()
+    result = Popen(
+        ["git", "cat-file", "-e", revision], cwd=repo, stdout=PIPE, stderr=PIPE
+    ).wait()
 
     return result == 0
 
@@ -51,7 +58,7 @@ class Entry:
 
 
 def to_entry(
-    repo: Path, name: str, path_or_revision: Union[Path, str]
+    settings: Settings, name: str, path_or_revision: Union[Path, str]
 ) -> Optional[Entry]:
     """
     Computer whether the given item is a path to an executable or a revision
@@ -73,13 +80,13 @@ def to_entry(
     if path.is_file() and os.access(path, os.X_OK):
         return Entry(kind="file", data=str(path), name=name)
 
-    if revision_exists(repo, str(path)):
+    if revision_exists(settings.repository, str(path)):
         return Entry(kind="revision", data=str(path), name=name)
 
     return None
 
 
-def compile_and_copy(repo: Path, entry: Entry) -> Optional[str]:
+def compile_and_copy(settings: Settings, entry: Entry) -> Optional[str]:
     """
     Attempts to extract an executable from the given repository and
     with the given entry configuration. The configuration can either be
@@ -94,25 +101,34 @@ def compile_and_copy(repo: Path, entry: Entry) -> Optional[str]:
     if not TEMP_DIR.exists():
         TEMP_DIR.mkdir()
 
+    repo = settings.repository
     extension = ".exe" if platform.system() == "Windows" else ""
     dst = TEMP_DIR / f"{entry.name}{extension}"
 
     match entry.kind:
         case "file":
             shutil.copyfile(entry.data, dst)
+            LOG.info(f"copied `{entry.data}`")
         case "revision":
             # we need to checkout the revision of the repository, compile it, and
             # then copy the file over.
             checkout_git_revision(repo, entry.data)
+            LOG.info(f"checked out `{entry.data}`")
 
+            cargo_args = compute_cargo_args(settings)
             handle = Popen(
-                ["cargo", "build", "--release"], cwd=repo, stderr=PIPE,
+                ["cargo", "build", *cargo_args], cwd=repo, stderr=PIPE, stdout=PIPE
             )
-            
+            LOG.info(
+                f"compiling revision `{entry.data}` in `{settings.optimisation_level}` mode"
+            )
+
             result = handle.wait()
             if result != 0:
                 _, stderr = handle.communicate()
-                raise RuntimeError(f"Compilation returned a non-zero exit code, output:\n{stderr}")
+                raise RuntimeError(
+                    f"Compilation returned a non-zero exit code, output:\n{stderr}"
+                )
 
             exe_name = "hashc.exe" if platform.system() == "Windows" else "hashc"
             exe_path = repo / "target" / "release" / exe_name
@@ -125,3 +141,15 @@ def compile_and_copy(repo: Path, entry: Entry) -> Optional[str]:
             shutil.copyfile(exe_path, dst)
 
     return dst
+
+
+def compute_cargo_args(settings: Settings) -> List[str]:
+    """
+    Compute the arguments that we should pass to `cargo` when
+    compiling each version of the compiler.
+    """
+
+    if settings.optimisation_level == OptimisationLevel.release:
+        return ["--release"]
+    else:
+        return []
