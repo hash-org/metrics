@@ -11,6 +11,8 @@ ruff = "^0.2.2"
 typer = "^0.9.0"
 numpy = "^1.26.4"
 pyright = "^1.1.350"
+rich = "^13.7.0"
+structlog = "^24.1.0"
 
 
 [build-system]
