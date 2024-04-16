@@ -59,12 +59,12 @@ def compare(
     """
 
     # Check whether the repository path exists or not.
-    repository = Path(repository)
-    if not repository.exists() or not repository.is_dir():
+    repo = Path(repository)
+    if not repo.exists() or not repo.is_dir():
         raise typer.BadParameter("The repository does not exist or is not a directory")
 
     settings = Settings(
-        repository=repository, optimisation_level=optimisation_level, output_kind=output
+        repository=repo, optimisation_level=optimisation_level, output_kind=output
     )
 
     # TODO: make this be able to run with N versions

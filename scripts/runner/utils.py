@@ -86,7 +86,7 @@ def to_entry(
     return None
 
 
-def compile_and_copy(settings: Settings, entry: Entry) -> Optional[str]:
+def compile_and_copy(settings: Settings, entry: Entry) -> Optional[Path]:
     """
     Attempts to extract an executable from the given repository and
     with the given entry configuration. The configuration can either be
