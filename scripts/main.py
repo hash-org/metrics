@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 
+from typing import List
 import typer
 from pathlib import Path
 from shutil import rmtree
 
 from runner.logger import LOG
-from runner.utils import OptimisationLevel, compile_and_copy, to_entry
+from runner.utils import (
+    CompilationProvider,
+    OptimisationLevel,
+    compile_and_copy,
+    to_entry,
+)
 from runner.options import TEMP_DIR, OutputKind, REPO_DIR, Settings
 
 app = typer.Typer(add_completion=False)
@@ -85,6 +91,8 @@ def compare(
             "a revision number"
         )
 
+    compilation_providers: List[CompilationProvider] = []
+
     for entry in [left_entry, right_entry]:
         # now we need to either copy over the executable into the "testbed", or checkout
         # the revision, compile it and then copy over the executable.
@@ -93,6 +101,9 @@ def compare(
             raise typer.BadParameter(
                 f"Failed to compile and copy the `{entry.name}` comparison object"
             )
+        else:
+            compilation_providers.append(compilation_result)
+
 
 
 def main():

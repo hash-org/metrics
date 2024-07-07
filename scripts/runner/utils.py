@@ -86,7 +86,16 @@ def to_entry(
     return None
 
 
-def compile_and_copy(settings: Settings, entry: Entry) -> Optional[Path]:
+class CompilationProvider:
+    entry: Entry
+    path: Path
+
+    def __init__(self, entry: Entry, path: Path):
+        self.entry = entry
+        self.path = path
+
+
+def compile_and_copy(settings: Settings, entry: Entry) -> Optional[CompilationProvider]:
     """
     Attempts to extract an executable from the given repository and
     with the given entry configuration. The configuration can either be
@@ -140,7 +149,7 @@ def compile_and_copy(settings: Settings, entry: Entry) -> Optional[Path]:
 
             shutil.copyfile(exe_path, dst)
 
-    return dst
+    return CompilationProvider(path=dst, entry=entry)
 
 
 def compute_cargo_args(settings: Settings) -> List[str]:
