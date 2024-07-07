@@ -5,8 +5,8 @@ from subprocess import Popen, PIPE
 from pathlib import Path
 from typing import List, Literal, Union, Optional
 
-from options import TEMP_DIR, OptimisationLevel, Settings
-from logger import LOG
+from .options import TEMP_DIR, OptimisationLevel, Settings
+from .logger import LOG
 
 
 def checkout_git_revision(repo: Path, revision: str):
