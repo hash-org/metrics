@@ -1,0 +1,9 @@
+{
+    "cases": [
+        {
+            "name": "Default case",
+            "description": "This is the default case",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/main.hash"
+        }
+    ]
+}
