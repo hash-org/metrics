@@ -96,6 +96,13 @@ def compare(
             "The left comparison object is not a valid path to an executable or "
             "a revision number"
         )
+    
+    # now we have the executables, we want to run them on the provided test cases. We take the path
+    # from the `--cases` argument and turn into a list of cases to run.
+
+    cases_path = Path(cases)
+    if not cases_path.exists() or not cases_path.is_file():
+        raise typer.BadParameter("The cases file does not exist or is not a file")
 
     compilation_providers: List[CompilationProvider] = []
 
@@ -109,13 +116,6 @@ def compare(
             )
         else:
             compilation_providers.append(compilation_result)
-
-    # now we have the executables, we want to run them on the provided test cases. We take the path
-    # from the `--cases` argument and turn into a list of cases to run.
-
-    cases_path = Path(cases)
-    if not cases_path.exists() or not cases_path.is_file():
-        raise typer.BadParameter("The cases file does not exist or is not a file")
 
     test_config = parse_cases_file(cases_path)
     results = []
