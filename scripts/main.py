@@ -6,6 +6,8 @@ from pathlib import Path
 from shutil import rmtree
 
 from runner.logger import LOG
+from runner.cases import parse_cases_file, run_test_case
+from runner.results import ResultEntry, TestResults
 from runner.utils import (
     CompilationProvider,
     OptimisationLevel,
@@ -41,6 +43,10 @@ def compare(
     ),
     repository: str = typer.Option(
         REPO_DIR, help="The path to the repository of the compiler."
+    ),
+    cases: str = typer.Option(
+        ...,
+        help="The path to the file containing the test cases to run the comparison on.",
     ),
     output: OutputKind = typer.Option(
         OutputKind.table, help="The kind of format to use when outputting results"
@@ -104,6 +110,55 @@ def compare(
         else:
             compilation_providers.append(compilation_result)
 
+    # now we have the executables, we want to run them on the provided test cases. We take the path
+    # from the `--cases` argument and turn into a list of cases to run.
+
+    cases_path = Path(cases)
+    if not cases_path.exists() or not cases_path.is_file():
+        raise typer.BadParameter("The cases file does not exist or is not a file")
+
+    test_config = parse_cases_file(cases_path)
+    results = []
+
+    for case_id, case in enumerate(test_config.cases):
+        # get the left and right results
+        left_result = run_test_case(
+            repo=repo, compiler=compilation_providers[0], case=case, case_id=case_id
+        )
+        right_result = run_test_case(
+            repo=repo, compiler=compilation_providers[1], case=case, case_id=case_id
+        )
+
+        if left_result.exit_code != 0:
+            LOG.error(f"failed to run the left comparison object on case `{case.file}`")
+            continue
+
+        if right_result.exit_code != 0:
+            LOG.error(
+                f"failed to run the right comparison object on case `{case.file}`"
+            )
+            continue
+
+        # construct the results from both runs
+        results.append(
+            ResultEntry(name=case.name, original=left_result, result=right_result)
+        )
+
+    results_obj = TestResults(results=results)
+
+    # now we want to output the results in the desired format.
+    match settings.output_kind:
+        case OutputKind.table:
+            # TODO: Use tabulation and create a view which shows the differences
+            #
+            # - We want to have a `total` view between all of the test cases and a
+            #   a detailed view (invoked by `--detailed-results`) which will display
+            #   the difference for every single test case that was present instead of
+            #   just showing the total value.
+            for result in results_obj:
+                print(result)
+        case OutputKind.json:
+            print(results.model_dump_json())
 
 
 def main():
