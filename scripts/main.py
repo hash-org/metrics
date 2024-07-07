@@ -4,9 +4,9 @@ import typer
 from pathlib import Path
 from shutil import rmtree
 
-from logger import LOG
-from utils import OptimisationLevel, compile_and_copy, to_entry
-from options import TEMP_DIR, OutputKind, REPO_DIR, Settings
+from runner.logger import LOG
+from runner.utils import OptimisationLevel, compile_and_copy, to_entry
+from runner.options import TEMP_DIR, OutputKind, REPO_DIR, Settings
 
 app = typer.Typer(add_completion=False)
 
