@@ -7,7 +7,6 @@ REPO_DIR = Path("/Users/afedotov/projects/hash-org/hashc")
 
 
 class OutputKind(str, Enum):
-    graph = "graph"
     table = "table"
     json = "json"
 
