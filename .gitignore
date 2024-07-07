@@ -44,3 +44,5 @@ __pycache__/
 Thumbs.db
 
 scripts/tmp
+
+.venv/
