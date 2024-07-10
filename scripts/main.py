@@ -79,8 +79,6 @@ def compare(
         repository=repo, optimisation_level=optimisation_level, output_kind=output
     )
 
-    # TODO: make this be able to run with N versions
-
     # determine whether the left and right is an executable.
     left, right = left.strip(), right.strip()
     left_entry = to_entry(settings, name="left", path_or_revision=left)
@@ -96,7 +94,7 @@ def compare(
             "The left comparison object is not a valid path to an executable or "
             "a revision number"
         )
-    
+
     # now we have the executables, we want to run them on the provided test cases. We take the path
     # from the `--cases` argument and turn into a list of cases to run.
 
