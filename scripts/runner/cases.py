@@ -6,6 +6,7 @@ from subprocess import PIPE, Popen
 from pydantic import BaseModel, ValidationError
 from typing import List, Optional
 
+
 from .messages import Metrics, find_message_in_stream
 from .logger import LOG
 from .options import TEMP_DIR
@@ -109,8 +110,9 @@ def run_test_case(
     args = {
         "entry_point": str(case.file),
         "output_directory": str(output_path),
-        "messaging_format": "Json",  # TODO: fix this item to accept lower case
+        "messaging_format": "json",
         "timings": True,
+        "stage": "build",  # TODO: make this configurable.
         # "optimisation_level": "Debug" # TODO: add a way to specify this per case or per run?
     }
 
