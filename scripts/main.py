@@ -15,6 +15,8 @@ from runner.utils import (
     to_entry,
 )
 from runner.options import TEMP_DIR, OutputKind, REPO_DIR, OutputSettings, Settings
+from runner.output import TabulatedOutput
+
 
 app = typer.Typer(add_completion=False)
 
@@ -142,7 +144,7 @@ def compare(
             ResultEntry(name=case.name, original=left_result, result=right_result)
         )
 
-    results_obj = TestResults(results=results)
+    test_results = TestResults(results=results)
 
     # now we want to output the results in the desired format.
     #
@@ -151,14 +153,8 @@ def compare(
 
     match settings.output_kind:
         case OutputKind.table:
-            # TODO: Use tabulation and create a view which shows the differences
-            #
-            # - We want to have a `total` view between all of the test cases and a
-            #   a detailed view (invoked by `--detailed-results`) which will display
-            #   the difference for every single test case that was present instead of
-            #   just showing the total value.
-            for result in results_obj:
-                print(result)
+            result_printer = TabulatedOutput(output_settings, test_results)
+            result_printer.print_info()
         case OutputKind.json:
             print(results.model_dump_json())
 
