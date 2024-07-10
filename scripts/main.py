@@ -14,7 +14,7 @@ from runner.utils import (
     compile_and_copy,
     to_entry,
 )
-from runner.options import TEMP_DIR, OutputKind, REPO_DIR, Settings
+from runner.options import TEMP_DIR, OutputKind, REPO_DIR, OutputSettings, Settings
 
 app = typer.Typer(add_completion=False)
 
@@ -145,6 +145,10 @@ def compare(
     results_obj = TestResults(results=results)
 
     # now we want to output the results in the desired format.
+    #
+    # TODO: add ways to configure this
+    output_settings = OutputSettings()
+
     match settings.output_kind:
         case OutputKind.table:
             # TODO: Use tabulation and create a view which shows the differences

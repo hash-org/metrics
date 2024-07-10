@@ -11,6 +11,22 @@ class OutputKind(str, Enum):
     json = "json"
 
 
+class CharacterSet(str, Enum):
+    utf8 = "utf-8"
+    ascii = "ascii"
+
+
+@dataclass
+class OutputSettings:
+    """
+    The settings for the output of the results. These settings options are
+    agnostic to the output kind.
+    """
+
+    character_set: CharacterSet = CharacterSet.utf8
+    use_ansi: bool = True
+
+
 class OptimisationLevel(str, Enum):
     debug = "debug"
     release = "release"
