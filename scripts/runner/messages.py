@@ -22,6 +22,12 @@ class Duration(BaseModel):
             nanos=self.nanos + other.nanos,
         )
 
+    def to_ms(self) -> float:
+        """
+        Convert the `Duration` into milliseconds.
+        """
+        return self.secs * 1e3 + self.nanos * 1e-6
+
 
 class MetricEntry(BaseModel):
     start_rss: Optional[int]
