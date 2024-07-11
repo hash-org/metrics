@@ -1,9 +1,24 @@
 {
     "cases": [
         {
-            "name": "Default case",
-            "description": "This is the default case",
-            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/main.hash"
+            "name": "Hello world",
+            "description": "A hello world example",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/hello_world.hash"
+        },
+        {
+            "name": "Simple match case",
+            "description": "Tests the compiler's capability for compiling match cases",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/simple_cases.hash"
+        },
+        {
+            "name": "match case stress",
+            "description": "Match cases stress",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/match_cases.hash"
+        },
+        {
+            "name": "String comparisons",
+            "description": "String comparison checks",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/string_comparisons.hash"
         }
     ]
 }

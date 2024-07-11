@@ -1,0 +1,1010 @@
+main := () => {
+}
+
+
+fervent_williams0 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams1 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams2 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams3 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams4 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams5 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams6 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams7 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams8 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams9 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams10 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams11 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams12 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams13 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams14 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams15 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams16 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams17 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams18 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams19 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams20 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams21 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams22 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams23 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams24 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams25 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams26 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams27 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams28 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams29 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams30 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams31 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams32 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams33 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams34 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams35 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams36 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams37 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams38 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams39 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams40 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams41 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams42 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams43 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams44 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams45 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams46 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams47 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams48 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams49 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams50 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams51 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams52 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams53 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams54 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams55 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams56 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams57 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams58 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams59 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams60 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams61 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams62 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams63 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams64 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams65 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams66 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams67 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams68 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams69 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams70 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 
+
+
+fervent_williams71 := (left: Option<i32>, right: Option<i32>) -> i32 => {
+    loop {
+        return match (left, right) {
+        (Option::Some(a), Option::Some(b)) => a + b,
+        (Option::Some(a), Option::None) => a,
+        (Option::None, Option::Some(a)) => {a},
+        (Option::None, Option::None) => 0  
+        }
+    };
+
+    0
+}; 

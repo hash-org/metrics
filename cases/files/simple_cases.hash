@@ -1,0 +1,16 @@
+main := () => {
+    val : (Option<u32>, Option<u32>)= (Option::Some(1u32), Option::None)
+
+    total := match val {
+        (Option::Some(x), Option::Some(y)) => x + y,
+        (Option::Some(x), Option::None) => x,
+        (Option::None, Option::Some(y)) => y,
+        (Option::None, Option::None) => 0,
+    };
+
+    if total == 1 {
+        println("Hello, World!")
+    } else {
+        println("Goodbye, World!")
+    }
+}
