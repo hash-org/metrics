@@ -1,11 +1,22 @@
 import math
 from typing import Tuple
 
-from .results import TestResults
+from .results import TestResults, percentage_diff
 from .options import OutputSettings
 
 from rich.console import Console
 from rich.table import Table
+
+
+def sizeof_fmt(num: int, suffix="B") -> str:
+    """
+    Convert the given number of bytes into a human-readable format.
+    """
+    for unit in ("", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"):
+        if abs(num) < 1024.0:
+            return f"{num:3.1f}{unit}{suffix}"
+        num /= 1024.0
+    return f"{num:.1f}Yi{suffix}"
 
 
 def get_trend_icon(value: float) -> str:
@@ -87,7 +98,41 @@ class TabulatedOutput:
         # case and then the "total" difference at the end. The total difference
         # should show the `avg` difference and the `range` difference.
 
-        # exe_size_comparison_table = Table()
+        exe_size_comparison_table = Table(
+            title="Executable Size Comparison",
+        )
+
+        exe_size_comparison_table.add_column("Case")
+        exe_size_comparison_table.add_column("Difference")
+        exe_size_comparison_table.add_column("Value")
+
+        for case in self.results.case_results:
+            left_size = case.original.exe_size
+            right_size = case.result.exe_size
+
+            # if both are none, we just skip it entirely.
+            if not left_size and not right_size:
+                continue
+
+            # if one is ok and not the other (perhaps a compilation error), then
+            # we write `N/A` for both
+            if not left_size or not right_size:
+                exe_size_comparison_table.add_row(
+                    f"[bold]{case.name}[/bold]",
+                    "N/A",
+                    "N/A",
+                )
+                continue
+
+            diff = right_size - left_size
+            trend = get_trend_icon(diff)
+            diff_percentage = percentage_diff(left_size, right_size)
+
+            exe_size_comparison_table.add_row(
+                f"[bold]{case.name}[/bold]",
+                f"{trend} {sizeof_fmt(abs(diff))}",
+                f"{trend} {abs(diff_percentage):.2f}% ({sizeof_fmt(right_size)})",
+            )
 
         self.console.print(rss_time_comparison_table, new_line_start=True)
-        # self.console.print(exe_size_comparison_table)
+        self.console.print(exe_size_comparison_table, new_line_start=True)
