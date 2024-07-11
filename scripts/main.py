@@ -153,7 +153,9 @@ def compare(
 
     match settings.output_kind:
         case OutputKind.table:
-            result_printer = TabulatedOutput(output_settings, test_results)
+            result_printer = TabulatedOutput(
+                output_settings, test_results, compilation_providers
+            )
             result_printer.print_info()
         case OutputKind.json:
             print(results.model_dump_json())

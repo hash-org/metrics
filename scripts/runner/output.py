@@ -1,6 +1,8 @@
 import math
-from typing import Tuple
+from typing import List, Tuple
 
+
+from .utils import CompilationProvider
 from .results import TestResults, percentage_diff
 from .options import OutputSettings
 
@@ -51,19 +53,46 @@ class TabulatedOutput:
 
     settings: OutputSettings
     results: TestResults
+    compilation_providers: List[CompilationProvider]
 
     console: Console
 
-    def __init__(self, settings: OutputSettings, results: TestResults):
+    def __init__(
+        self,
+        settings: OutputSettings,
+        results: TestResults,
+        compilation_providers: List[CompilationProvider],
+    ):
         self.settings = settings
         self.results = results
+        self.compilation_providers = compilation_providers
         self.console = Console(
             soft_wrap=True,
         )
 
+    def _construct_compiler_provider_comparison_string(
+        self, background: str = "#F47983"
+    ) -> str:
+        """
+        Create a string that represents the comparison between the two
+        compiler providers.
+        """
+        assert len(self.compilation_providers) >= 2
+        left_instance = self.compilation_providers[0]
+        right_instance = self.compilation_providers[1]
+
+        return f"[bold on {background}]{left_instance}[/] vs [bold on {background}]{right_instance}[/]"
+
     def print_info(self) -> None:
+        """
+        Construct the RSS/Duration and Exe size comparison tables, and print them to
+        the console.
+        """
+
+        compiler_providers = self._construct_compiler_provider_comparison_string()
+
         rss_time_comparison_table = Table(
-            title="RSS/Time Comparison",
+            title=f"RSS/Time Comparison of {compiler_providers}",
         )
 
         # We want to show the difference in the RSS/time per stage
@@ -97,9 +126,8 @@ class TabulatedOutput:
         # the executable size difference. We will show the difference per
         # case and then the "total" difference at the end. The total difference
         # should show the `avg` difference and the `range` difference.
-
         exe_size_comparison_table = Table(
-            title="Executable Size Comparison",
+            title=f"Executable Size Comparison of\n{compiler_providers}",
         )
 
         exe_size_comparison_table.add_column("Case")
