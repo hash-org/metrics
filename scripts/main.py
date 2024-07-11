@@ -144,7 +144,7 @@ def compare(
             ResultEntry(name=case.name, original=left_result, result=right_result)
         )
 
-    test_results = TestResults(results=results)
+    test_results = TestResults(case_results=results)
 
     # now we want to output the results in the desired format.
     #

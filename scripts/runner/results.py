@@ -98,28 +98,28 @@ class TestResults(BaseModel):
     This is a simple wrapper around a list of `ResultEntry` objects.
     """
 
-    results: List[ResultEntry]
+    case_results: List[ResultEntry]
 
     def __iter__(self) -> Generator[ResultEntry, None, None]:
-        for result in self.results:
+        for result in self.case_results:
             yield result
 
     def append(self, item: ResultEntry) -> None:
-        self.results.append(item)
+        self.case_results.append(item)
 
     @property
     def stages(self) -> List[str]:
         """
         Return the list of stages that are present in the test results.
 
-        TODO: make this cached, since its only going to change if the `self.results`
+        TODO: make this cached, since its only going to change if the `self.case_results`
         changes.
 
         TODO: make this include sub-stages too?
         """
         return (
-            self.results[0].original.compile_metrics.metrics.keys()
-            if self.results
+            self.case_results[0].original.compile_metrics.metrics.keys()
+            if self.case_results
             else []
         )
 
@@ -137,7 +137,7 @@ class TestResults(BaseModel):
 
         metrics = []
 
-        for item in self.results:
+        for item in self.case_results:
             entry = item.original if result == "left" else item.result
             assert entry.compile_metrics
 
