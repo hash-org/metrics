@@ -14,6 +14,7 @@ def sizeof_fmt(num: int, suffix="B") -> str:
     """
     Convert the given number of bytes into a human-readable format.
     """
+
     for unit in ("", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"):
         if abs(num) < 1024.0:
             return f"{num:3.1f}{unit}{suffix}"
@@ -22,6 +23,13 @@ def sizeof_fmt(num: int, suffix="B") -> str:
 
 
 def get_trend_icon(value: float) -> str:
+    """
+    Function to compute the trend icon based on the given value.
+
+    If the value is 0, then we return an up-down arrow. If the value is
+    positive, we return an up arrow, otherwise we return a down arrow.
+    """
+
     if value == 0:
         return ":up-down_arrow:"
     elif value > 0:
@@ -30,14 +38,33 @@ def get_trend_icon(value: float) -> str:
         return "[green] :down_arrow: [/green]"
 
 
-def compute_domain_text(domain: Tuple[float, float]) -> str:
-    if math.isclose(domain[0], domain[1]):
-        trend = get_trend_icon(domain[0])
-        return f"[bold]{trend} {abs(domain[0]):.2f}% [/bold]"
+def get_trend_colour(value: float) -> str:
+    """
+    Function to compute the colour of the trend based on the given value.
+
+    If the value is 0, then we return an empty string. If the value is
+    positive, we return "red", otherwise we return "green".
+    """
+    if value == 0:
+        return ""
+    elif value > 0:
+        return "red"
     else:
-        return (
-            f"[bold]{abs(domain[0]):.2f}%[/bold] - [bold]{abs(domain[1]):.2f}%[/bold]"
-        )
+        return "green"
+
+
+def compute_domain_text(domain: Tuple[float, float]) -> str:
+    """
+    Function to compute the textual representation of a given domain.
+    """
+
+    if math.isclose(domain[0], domain[1]):
+        colour = get_trend_colour(domain[0])
+        return f"[{colour} bold]{domain[0]:.2f}% [/]"
+    else:
+        min_colour = get_trend_colour(domain[0])
+        max_colour = get_trend_colour(domain[1])
+        return f"[{min_colour} bold]{domain[0]:.2f}%[/], [{max_colour} bold]{domain[1]:.2f}%[/]"
 
 
 def compute_avg_text(avg: float) -> str:
