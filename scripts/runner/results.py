@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Generator, List, Optional, Tuple, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from .cases import TestCaseResult
 from .messages import Metrics
@@ -18,9 +18,6 @@ def percentage_diff(left: float, right: float) -> float:
         return float("inf")
 
     return ((right - left) / left) * 100
-    # if right >= left:
-    # else:
-    #     return -(100.0 - right / left * 100.0)
 
 
 @dataclass
@@ -49,21 +46,16 @@ class ResultEntry(BaseModel):
     name: str
     original: TestCaseResult
     result: TestCaseResult
-    comparison: Optional[ResultEntryComparison] = Field(default=None)
 
-    def model_post_init(self, __context):
-        """
-        Construct the `comparison` after the initial structure has been initialised.
-        """
-        self.comparison = ResultEntry.construct_comparison(self.original, self.result)
-
-    @staticmethod
-    def construct_comparison(
-        original: TestCaseResult, result: TestCaseResult
+    def compare(
+        self,
     ) -> Optional[ResultEntryComparison]:
         """
         Construct a comparison between the two test case results.
         """
+        original = self.original
+        result = self.result
+
         if original.compile_metrics is None or result.compile_metrics is None:
             return None
 
