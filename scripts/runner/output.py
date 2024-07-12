@@ -48,9 +48,9 @@ def get_trend_colour(value: float) -> str:
     if value == 0:
         return ""
     elif value > 0:
-        return "red"
+        return "red "
     else:
-        return "green"
+        return "green "
 
 
 def compute_domain_text(domain: Tuple[float, float]) -> str:
@@ -60,11 +60,11 @@ def compute_domain_text(domain: Tuple[float, float]) -> str:
 
     if math.isclose(domain[0], domain[1]):
         colour = get_trend_colour(domain[0])
-        return f"[{colour} bold]{domain[0]:.2f}% [/]"
+        return f"[{colour}bold]{domain[0]:.2f}% [/]"
     else:
         min_colour = get_trend_colour(domain[0])
         max_colour = get_trend_colour(domain[1])
-        return f"[{min_colour} bold]{domain[0]:.2f}%[/], [{max_colour} bold]{domain[1]:.2f}%[/]"
+        return f"[{min_colour}bold]{domain[0]:.2f}%[/], [{max_colour}bold]{domain[1]:.2f}%[/]"
 
 
 def compute_avg_text(avg: float) -> str:
