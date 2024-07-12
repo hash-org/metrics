@@ -2,8 +2,8 @@ import os
 import json
 
 from pathlib import Path
-from subprocess import PIPE, Popen
-from pydantic import BaseModel, ValidationError
+from subprocess import PIPE, Popen, TimeoutExpired
+from pydantic import BaseModel, Field, ValidationError
 from typing import List, Optional
 
 
@@ -49,6 +49,10 @@ class TestCase(BaseModel):
     metrics. 
     """
     run: bool = False
+
+    timeout: int = Field(
+        60, description="The maximum number of seconds to run the case for.", ge=1
+    )
 
 
 class TestCaseFile(BaseModel):
@@ -122,17 +126,22 @@ def run_test_case(
     # Args must be double encoded
     encoded_args = json.dumps(json.dumps(args))
 
-    handle = Popen(
-        f"{compiler.path} --configure {encoded_args}",
-        cwd=repo,
-        stderr=PIPE,
-        stdout=PIPE,
-        shell=True,
-    )
-    LOG.info(f"compiling case `{case.file}`")
+    try:
+        handle = Popen(
+            f"{compiler.path} --configure {encoded_args}",
+            cwd=repo,
+            stderr=PIPE,
+            stdout=PIPE,
+            shell=True,
+        )
 
-    result = handle.wait()
-    stdout, stderr = handle.communicate()
+        result = handle.wait(timeout=case.timeout)
+        stdout, stderr = handle.communicate()
+    except TimeoutExpired:
+        LOG.warn(f"command `{handle.args}` timed out after {case.timeout} seconds")
+        return TestCaseResult(
+            case=case_id, exit_code=-1, compile_metrics=None, exe_size=None
+        )
 
     # For the non-zero exit case, we simply return the result and do no further
     # processing.
