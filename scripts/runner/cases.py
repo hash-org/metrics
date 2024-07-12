@@ -29,26 +29,27 @@ class TestCase(BaseModel):
     """
     file: Path
 
-    """
-    An optional description of the case, this is used for debugging purposes.
-    """
-    description: Optional[str] = None
+    description: Optional[str] = Field(
+        None,
+        description="An optional description of the case, this is used for debugging purposes.",
+    )
 
-    """
-    Any associated tags with the case, this is used for filtering and search. 
-    """
-    tags: List[str] = []
+    tags: List[str] = Field([], description="Any associated tags with the case.")
 
-    """ 
-    This is stored in the JSON format that the compiler accepts, specifically a `DeepPartial<CompilerSettings>`
-    """
-    additional_args: Optional[str] = None
+    additional_args: Optional[str] = Field(
+        None,
+        description="Additional arguments to pass to the compiler, specifically a `DeepPartial<CompilerSettings>.",
+    )
 
-    """
-    Whether to also run the generated executable or not, looking at the used memory, time, and other
-    metrics. 
-    """
-    run: bool = False
+    run: bool = Field(
+        False, description="Whether to run the generated executable or not."
+    )
+
+    iterations: int = Field(1, description="The number of times to run the case.", ge=1)
+
+    warmup_iterations: int = Field(
+        default=2, description="The number of warmup iterations to run the case."
+    )
 
     timeout: int = Field(
         60, description="The maximum number of seconds to run the case for.", ge=1
@@ -101,6 +102,55 @@ class TestCaseResult(BaseModel):
 
 def run_test_case(
     *, repo: Path, compiler: CompilationProvider, case_id: int, case: TestCase
+) -> TestCaseResult:
+    """
+    Handle the running of a single test case. This will do the following:
+
+    - Run the warmup iterations first, the number of iterations are specified
+      by the `warmup_iterations` field in the case.
+
+    - Run the actual iterations, the number of iterations are specified by the
+      `iterations` field in the case.
+
+    - Check for any outliers in the `total` metrics and warn the user if any are found.
+
+    - Return the average of the results.
+    """
+
+    # Run the warmup iterations first.
+    LOG.info(
+        f"compiling case `{case.file} with {case.warmup_iterations} warmup iterations`"
+    )
+
+    for _ in range(case.warmup_iterations):
+        _single_run(
+            repo=repo, compiler=compiler, case_id=case_id, case=case, silent=True
+        )
+
+    # Now run the actual iterations.
+
+    results = []
+
+    for i in range(case.iterations):
+        LOG.info(f"running iteration {i} for case `{case.file}`")
+        results.append(
+            _single_run(repo=repo, compiler=compiler, case_id=case_id, case=case)
+        )
+
+    # We want to check for any statistical outliers per `total` entry in each of the
+    # metrics stages. If so, we want to warn the user about this.
+
+    LOG.info("successfully compiled and collected metrics")
+    return results[0]  # TODO: must be changed to return the average of the results.
+
+
+def _single_run(
+    *,
+    repo: Path,
+    compiler: CompilationProvider,
+    case_id: int,
+    case: TestCase,
+    silent=False,
 ) -> TestCaseResult:
     """
     Run the provided test case with the compiler executable.
@@ -175,7 +225,6 @@ def run_test_case(
 
     size = exe_name.stat().st_size
 
-    LOG.info("successfully compiled and collected metrics")
     return TestCaseResult(
         case=case_id, exit_code=result, compile_metrics=metrics, exe_size=size
     )
