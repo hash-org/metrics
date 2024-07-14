@@ -1,12 +1,22 @@
 #!/usr/bin/env python
 
+from typing import List
 import typer
 from pathlib import Path
 from shutil import rmtree
 
-from logger import LOG
-from utils import OptimisationLevel, compile_and_copy, to_entry
-from options import TEMP_DIR, OutputKind, REPO_DIR, Settings
+from runner.logger import LOG
+from runner.cases import parse_cases_file, run_test_case
+from runner.results import ResultEntry, TestResults
+from runner.utils import (
+    CompilationProvider,
+    OptimisationLevel,
+    compile_and_copy,
+    to_entry,
+)
+from runner.options import TEMP_DIR, OutputKind, REPO_DIR, OutputSettings, Settings
+from runner.output import TabulatedOutput
+
 
 app = typer.Typer(add_completion=False)
 
@@ -35,6 +45,10 @@ def compare(
     ),
     repository: str = typer.Option(
         REPO_DIR, help="The path to the repository of the compiler."
+    ),
+    cases: str = typer.Option(
+        ...,
+        help="The path to the file containing the test cases to run the comparison on.",
     ),
     output: OutputKind = typer.Option(
         OutputKind.table, help="The kind of format to use when outputting results"
@@ -67,8 +81,6 @@ def compare(
         repository=repo, optimisation_level=optimisation_level, output_kind=output
     )
 
-    # TODO: make this be able to run with N versions
-
     # determine whether the left and right is an executable.
     left, right = left.strip(), right.strip()
     left_entry = to_entry(settings, name="left", path_or_revision=left)
@@ -85,6 +97,15 @@ def compare(
             "a revision number"
         )
 
+    # now we have the executables, we want to run them on the provided test cases. We take the path
+    # from the `--cases` argument and turn into a list of cases to run.
+
+    cases_path = Path(cases)
+    if not cases_path.exists() or not cases_path.is_file():
+        raise typer.BadParameter("The cases file does not exist or is not a file")
+
+    compilation_providers: List[CompilationProvider] = []
+
     for entry in [left_entry, right_entry]:
         # now we need to either copy over the executable into the "testbed", or checkout
         # the revision, compile it and then copy over the executable.
@@ -93,6 +114,51 @@ def compare(
             raise typer.BadParameter(
                 f"Failed to compile and copy the `{entry.name}` comparison object"
             )
+        else:
+            compilation_providers.append(compilation_result)
+
+    test_config = parse_cases_file(cases_path)
+    results = []
+
+    for case_id, case in enumerate(test_config.cases):
+        # get the left and right results
+        left_result = run_test_case(
+            repo=repo, compiler=compilation_providers[0], case=case, case_id=case_id
+        )
+        right_result = run_test_case(
+            repo=repo, compiler=compilation_providers[1], case=case, case_id=case_id
+        )
+
+        if left_result.exit_code != 0:
+            LOG.error(f"failed to run the left comparison object on case `{case.file}`")
+            continue
+
+        if right_result.exit_code != 0:
+            LOG.error(
+                f"failed to run the right comparison object on case `{case.file}`"
+            )
+            continue
+
+        # construct the results from both runs
+        results.append(
+            ResultEntry(name=case.name, original=left_result, result=right_result)
+        )
+
+    test_results = TestResults(case_results=results)
+
+    # now we want to output the results in the desired format.
+    #
+    # TODO: add ways to configure this
+    output_settings = OutputSettings()
+
+    match settings.output_kind:
+        case OutputKind.table:
+            result_printer = TabulatedOutput(
+                output_settings, test_results, compilation_providers
+            )
+            result_printer.print_info()
+        case OutputKind.json:
+            print(results.model_dump_json())
 
 
 def main():

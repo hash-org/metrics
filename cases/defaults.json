@@ -1,0 +1,27 @@
+{
+    "cases": [
+        {
+            "name": "Hello world",
+            "description": "A hello world example",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/hello_world.hash",
+            "iterations": 5
+        },
+        {
+            "name": "Simple match case",
+            "description": "Tests the compiler's capability for compiling match cases",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/simple_cases.hash",
+            "iterations": 5
+        },
+        {
+            "name": "match case stress",
+            "description": "Match cases stress",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/match_cases.hash"
+        },
+        {
+            "name": "String comparisons",
+            "description": "String comparison checks",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/string_comparisons.hash",
+            "iterations": 5
+        }
+    ]
+}

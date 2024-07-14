@@ -44,3 +44,8 @@ __pycache__/
 Thumbs.db
 
 scripts/tmp
+
+.venv/
+
+# Ignore the `target/` folder, since this might be used for testing
+target/
