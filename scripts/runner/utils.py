@@ -137,7 +137,13 @@ def compile_and_copy(settings: Settings, entry: Entry) -> Optional[CompilationPr
 
     match entry.kind:
         case "file":
-            shutil.copyfile(entry.data, dst)
+            try:
+                shutil.copyfile(entry.data, dst)
+            except shutil.SameFileError:
+                # we don't care if it's the same file
+                pass
+
+
             LOG.info(f"copied `{entry.data}`")
         case "revision":
             # we need to checkout the revision of the repository, compile it, and
@@ -157,7 +163,7 @@ def compile_and_copy(settings: Settings, entry: Entry) -> Optional[CompilationPr
             if result != 0:
                 _, stderr = handle.communicate()
                 raise RuntimeError(
-                    f"Compilation returned a non-zero exit code, output:\n{stderr}"
+                    f"Compilation returned a non-zero exit code, output:\n{stderr.decode()}"
                 )
 
             exe_name = "hashc.exe" if platform.system() == "Windows" else "hashc"
