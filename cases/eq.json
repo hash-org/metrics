@@ -1,0 +1,10 @@
+{
+    "cases": [
+        {
+            "name": "Hello world",
+            "description": "A hello world example",
+            "file": "/Users/alex.fedotov/projects/hash-org/metrics/cases/files/hello_world.hash",
+            "iterations": 100
+        }
+    ]
+}

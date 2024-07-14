@@ -5,8 +5,11 @@ from subprocess import Popen, PIPE
 from pathlib import Path
 from typing import List, Literal, Union, Optional
 
-from options import TEMP_DIR, OptimisationLevel, Settings
-from logger import LOG
+from rich.text import Text
+from numpy import clip
+
+from .options import TEMP_DIR, OptimisationLevel, Settings
+from .logger import LOG
 
 
 def checkout_git_revision(repo: Path, revision: str):
@@ -47,6 +50,16 @@ type EntryKind = Literal["file", "revision"]
 
 
 class Entry:
+    """
+    A record to represent the kind of "compiler provider" source we're handling. The `Entry`
+    can either be:
+
+    - a "file" which is just a path to the executable of the compiler.
+
+    - a "revision" which is a Git revision number that we need to checkout, compile, and
+      then copy over the executable.
+    """
+
     kind: EntryKind
     data: str
     name: str
@@ -86,7 +99,24 @@ def to_entry(
     return None
 
 
-def compile_and_copy(settings: Settings, entry: Entry) -> Optional[Path]:
+class CompilationProvider:
+    entry: Entry
+    path: Path
+
+    def __init__(self, entry: Entry, path: Path):
+        self.entry = entry
+        self.path = path
+
+    def __str__(self) -> str:
+        item = Text.assemble(f"{self.entry.data}", overflow="ellipsis", end="")
+
+        width = clip(0, 20, len(self.entry.data))
+        item.align("center", width=width)
+
+        return item.__str__()
+
+
+def compile_and_copy(settings: Settings, entry: Entry) -> Optional[CompilationProvider]:
     """
     Attempts to extract an executable from the given repository and
     with the given entry configuration. The configuration can either be
@@ -107,7 +137,12 @@ def compile_and_copy(settings: Settings, entry: Entry) -> Optional[Path]:
 
     match entry.kind:
         case "file":
-            shutil.copyfile(entry.data, dst)
+            try:
+                shutil.copyfile(entry.data, dst)
+            except shutil.SameFileError:
+                # we don't care if it's the same file
+                pass
+
             LOG.info(f"copied `{entry.data}`")
         case "revision":
             # we need to checkout the revision of the repository, compile it, and
@@ -127,7 +162,7 @@ def compile_and_copy(settings: Settings, entry: Entry) -> Optional[Path]:
             if result != 0:
                 _, stderr = handle.communicate()
                 raise RuntimeError(
-                    f"Compilation returned a non-zero exit code, output:\n{stderr}"
+                    f"Compilation returned a non-zero exit code, output:\n{stderr.decode()}"
                 )
 
             exe_name = "hashc.exe" if platform.system() == "Windows" else "hashc"
@@ -140,7 +175,7 @@ def compile_and_copy(settings: Settings, entry: Entry) -> Optional[Path]:
 
             shutil.copyfile(exe_path, dst)
 
-    return dst
+    return CompilationProvider(path=dst, entry=entry)
 
 
 def compute_cargo_args(settings: Settings) -> List[str]:

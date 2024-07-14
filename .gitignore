@@ -21,11 +21,6 @@ yarn-error.log
 *.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 .history/*
 
 # Miscellaneous
@@ -44,3 +39,12 @@ __pycache__/
 Thumbs.db
 
 scripts/tmp
+
+.venv/
+
+# Ignore the `target/` folder, since this might be used for testing
+target/
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
+branch_structure.json

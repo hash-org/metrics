@@ -13,6 +13,7 @@ numpy = "^1.26.4"
 pyright = "^1.1.350"
 rich = "^13.7.0"
 structlog = "^24.1.0"
+pydantic = "2.7.3"
 
 
 [build-system]
