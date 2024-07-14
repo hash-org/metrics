@@ -143,7 +143,6 @@ def compile_and_copy(settings: Settings, entry: Entry) -> Optional[CompilationPr
                 # we don't care if it's the same file
                 pass
 
-
             LOG.info(f"copied `{entry.data}`")
         case "revision":
             # we need to checkout the revision of the repository, compile it, and

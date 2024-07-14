@@ -1,13 +1,25 @@
 import os
 import json
+import functools
 
 from pathlib import Path
 from subprocess import PIPE, Popen, TimeoutExpired
 from pydantic import BaseModel, Field, ValidationError
 from typing import List, Optional
 
+import numpy as np
 
-from .messages import Metrics, find_message_in_stream
+from .stats import check_outliers
+
+
+from .messages import (
+    Duration,
+    MetricEntry,
+    Metrics,
+    StageMetricEntry,
+    StageMetrics,
+    find_message_in_stream,
+)
 from .logger import LOG
 from .options import TEMP_DIR
 from .utils import CompilationProvider
@@ -45,7 +57,7 @@ class TestCase(BaseModel):
         False, description="Whether to run the generated executable or not."
     )
 
-    iterations: int = Field(1, description="The number of times to run the case.", ge=1)
+    iterations: int = Field(2, description="The number of times to run the case.", ge=1)
 
     warmup_iterations: int = Field(
         default=2, description="The number of warmup iterations to run the case."
@@ -129,7 +141,7 @@ def run_test_case(
 
     # Now run the actual iterations.
 
-    results = []
+    results: List[TestCaseResult] = []
 
     for i in range(case.iterations):
         LOG.info(f"running iteration {i} for case `{case.file}`")
@@ -137,11 +149,80 @@ def run_test_case(
             _single_run(repo=repo, compiler=compiler, case_id=case_id, case=case)
         )
 
-    # We want to check for any statistical outliers per `total` entry in each of the
-    # metrics stages. If so, we want to warn the user about this.
+    assert results, "no results were collected"
+
+    if not any(result.compile_metrics for result in results):
+        LOG.warn("no cases exited successfully, skipping result.")
+        return results[0]
+
+    # Find the first result that has metrics, we'll use it to combine
+    # the metrics of all the results.
+
+    first_with_metrics = next(
+        (result for result in results if result.compile_metrics is not None), None
+    )
+    assert first_with_metrics is not None
 
     LOG.info("successfully compiled and collected metrics")
-    return results[0]  # TODO: must be changed to return the average of the results.
+
+    # Next we combine all of the totals per stage, into its own `total` stage.
+    combined_result = TestCaseResult(
+        case=case_id,
+        exit_code=0,
+        compile_metrics=Metrics(metrics={}),
+        exe_size=np.average([result.exe_size for result in results]),
+    )
+
+    for metric in first_with_metrics.compile_metrics.metrics.keys():
+        stage_metric_results: List[MetricEntry] = []
+
+        # Get all metrics of that key from all the results.
+        for result in results:
+            if result.compile_metrics is None:
+                continue
+            if metric not in result.compile_metrics.metrics:
+                continue
+
+            stage_metric_results.append(result.compile_metrics.metrics[metric].total)
+
+        # We want to check for any statistical outliers per `total` entry in each of the
+        # metrics stages. If so, we want to warn the user about this.
+
+        if any(
+            [
+                check_outliers([entry.start_rss for entry in stage_metric_results]),
+                check_outliers([entry.end_rss for entry in stage_metric_results]),
+                check_outliers(
+                    [entry.duration.to_ms() for entry in stage_metric_results]
+                ),
+            ]
+        ):
+            LOG.warn(f"statistical outliers detected in the `{metric}` metric")
+
+        # Now we want to compute the average and the standard deviation of the results.
+        total_metric_entry = functools.reduce(lambda x, y: x + y, stage_metric_results)
+        combined_result.compile_metrics.metrics.update(
+            {
+                metric: StageMetricEntry(
+                    total=MetricEntry(
+                        start_rss=round(
+                            total_metric_entry.start_rss / len(stage_metric_results)
+                        ),
+                        end_rss=round(
+                            total_metric_entry.end_rss / len(stage_metric_results)
+                        ),
+                        duration=Duration.from_ms(
+                            total_metric_entry.duration.to_ms()
+                            / len(stage_metric_results)
+                        ),
+                    ),
+                    # TODO: propagate children metrics too...
+                    children=StageMetrics(metrics={}),
+                )
+            }
+        )
+
+    return combined_result
 
 
 def _single_run(

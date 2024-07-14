@@ -143,15 +143,19 @@ class TestResults(BaseModel):
 
         return metrics
 
-    def get_metric_domain(
-        self, result: ResultKind, stage: str, metric: MetricKind
-    ) -> Tuple[float, float]:
+    def get_metric_domain(self, stage: str, metric: MetricKind) -> Tuple[float, float]:
         """
         Get the domain of the specified metric for the specified stage.
         """
 
-        results = self.get_metric(result, stage, metric)
-        return (min(results), max(results))
+        left_results = self.get_metric("left", stage, metric)
+        right_results = self.get_metric("right", stage, metric)
+
+        diffs = [
+            percentage_diff(item[0], item[1])
+            for item in zip(left_results, right_results)
+        ]
+        return (min(diffs), max(diffs))
 
     def get_metric_avg(
         self, result: ResultKind, stage: str, metric: MetricKind
@@ -162,31 +166,25 @@ class TestResults(BaseModel):
         results = self.get_metric(result, stage, metric)
         return sum(results) / len(results)
 
-    def get_rss_avg(self, stage: str) -> float:
+    def get_rss_stats(self, stage: str) -> Tuple[float, float, float]:
+        """
+        Get the percentage average, and the percentage range of the RSS
+        metric for the specified stage.
+        """
+
         left_avg = self.get_metric_avg("left", stage, "rss")
         right_avg = self.get_metric_avg("right", stage, "rss")
-        return percentage_diff(left_avg, right_avg)
+        right_domain = self.get_metric_domain(stage, "rss")
 
-    def get_rss_domain(self, stage: str) -> Tuple[float, float]:
-        left_domain = self.get_metric_domain("left", stage, "rss")
-        right_domain = self.get_metric_domain("right", stage, "rss")
+        return (percentage_diff(left_avg, right_avg), *right_domain)
 
-        return (
-            percentage_diff(left_domain[0], right_domain[0]),
-            percentage_diff(left_domain[1], right_domain[1]),
-        )
-
-    def get_duration_avg(self, stage: str) -> float:
+    def get_duration_stats(self, stage: str) -> Tuple[float, float]:
+        """
+        Get the percentage average, and the percentage range of the duration
+        metric for the specified stage.
+        """
         left_avg = self.get_metric_avg("left", stage, "time")
         right_avg = self.get_metric_avg("right", stage, "time")
-        # stage, left_avg, right_avg, percentage_diff(left_avg, right_avg))
-        return percentage_diff(left_avg, right_avg)
+        right_domain = self.get_metric_domain(stage, "time")
 
-    def get_duration_domain(self, stage: str) -> Tuple[float, float]:
-        left_domain = self.get_metric_domain("left", stage, "time")
-        right_domain = self.get_metric_domain("right", stage, "time")
-
-        return (
-            percentage_diff(left_domain[0], right_domain[0]),
-            percentage_diff(left_domain[1], right_domain[1]),
-        )
+        return (percentage_diff(left_avg, right_avg), *right_domain)

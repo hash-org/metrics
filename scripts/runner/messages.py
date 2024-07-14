@@ -28,6 +28,15 @@ class Duration(BaseModel):
         """
         return self.secs * 1e3 + self.nanos * 1e-6
 
+    def from_ms(ms: float) -> Self:
+        """
+        Create a `Duration` instance from milliseconds.
+        """
+        return Duration(
+            secs=int(ms / 1e3),
+            nanos=int((ms % 1e3) * 1e6),
+        )
+
 
 class MetricEntry(BaseModel):
     start_rss: Optional[int]
@@ -39,6 +48,17 @@ class MetricEntry(BaseModel):
             start_rss=self.start_rss - other.start_rss,
             end_rss=self.end_rss - other.end_rss,
             duration=self.duration - other.duration,
+        )
+
+    def __add__(self, other: Self) -> Self:
+        """
+        Add two MetricEntry instances together.
+        """
+
+        return MetricEntry(
+            start_rss=self.start_rss + other.start_rss,
+            end_rss=self.end_rss + other.end_rss,
+            duration=self.duration + other.duration,
         )
 
 
@@ -69,6 +89,14 @@ class StageMetricEntry(BaseModel):
 # TODO: find a way to generate this from the compiler schema.
 class Metrics(BaseModel):
     metrics: Dict[str, StageMetricEntry]
+
+    def add(self, other: Self) -> Self:
+        return Metrics(
+            metrics={
+                stage: self.metrics[stage].diff(other.metrics[stage])
+                for stage in self.metrics
+            }
+        )
 
 
 type MessageName = Literal["metrics"]

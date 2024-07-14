@@ -134,17 +134,15 @@ class TabulatedOutput:
         # right as the result.
 
         for stage in self.results.stages:
-            rss_avg = self.results.get_rss_avg(stage)
-            rss_domain = self.results.get_rss_domain(stage)
-            duration_avg = self.results.get_duration_avg(stage)
-            duration_domain = self.results.get_duration_domain(stage)
+            rss_avg, rss_min, rss_max = self.results.get_rss_stats(stage)
+            d_avg, d_min, d_max = self.results.get_duration_stats(stage)
 
             rss_time_comparison_table.add_row(
                 stage,
                 compute_avg_text(rss_avg),
-                compute_domain_text(rss_domain),
-                compute_avg_text(duration_avg),
-                compute_domain_text(duration_domain),
+                compute_domain_text((rss_min, rss_max)),
+                compute_avg_text(d_avg),
+                compute_domain_text((d_min, d_max)),
             )
 
         # We also want to add the total row.
